@@ -1,24 +1,45 @@
 using UnityEngine;
 
-public class FlightController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    public float speed = 8f;
-    public float rotationSpeed = 40f;
+    public float speed = 10f;
+    public float rotationSpeed = 100f;
+
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
+    }
 
     void Update()
-    {  // Move forward
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        // Rotate based on input ' W/S for pitch'
-        float pitch = Input.GetAxis("Vertical") * rotationSpeed * Time.deltaTime;
-        transform.Rotate(pitch, 0f, 0f);
-        // Roll based on horizontal input 'A/D for roll'
-        float roll = -Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
-        transform.Rotate(0f, 0f, roll);
-        // Yaw based on Q and E keys
+    {
+        
+        float pitch = 0f;
+        if (Input.GetKey(KeyCode.UpArrow)) pitch = 1f;
+        if (Input.GetKey(KeyCode.DownArrow)) pitch = -1f;
+
+        
         float yaw = 0f;
-        if (Input.GetKey(KeyCode.Q)) yaw = -rotationSpeed * Time.deltaTime;
-        if (Input.GetKey(KeyCode.E)) yaw = rotationSpeed * Time.deltaTime;
-    
-        transform.Rotate(0f, yaw, 0f);
+        if (Input.GetKey(KeyCode.LeftArrow)) yaw = -1f;
+        if (Input.GetKey(KeyCode.RightArrow)) yaw = 1f;
+
+        
+        float roll = 0f;
+        if (Input.GetKey(KeyCode.Q)) roll = 1f;
+        if (Input.GetKey(KeyCode.E)) roll = -1f;
+
+        transform.Rotate(
+            pitch * rotationSpeed * Time.deltaTime,
+            yaw * rotationSpeed * Time.deltaTime,
+            roll * rotationSpeed * Time.deltaTime
+        );
+
+        
+        if (Input.GetKey(KeyCode.Space))
+        {
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
     }
 }
