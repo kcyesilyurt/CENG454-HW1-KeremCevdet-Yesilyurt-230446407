@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 10f;
+    public float speed = 9f;
     public float rotationSpeed = 100f;
 
     private Rigidbody rb;
@@ -24,8 +24,7 @@ public class PlayerController : MonoBehaviour
         float yaw = 0f;
         if (Input.GetKey(KeyCode.LeftArrow)) yaw = -1f;
         if (Input.GetKey(KeyCode.RightArrow)) yaw = 1f;
-
-        
+ 
         float roll = 0f;
         if (Input.GetKey(KeyCode.Q)) roll = 1f;
         if (Input.GetKey(KeyCode.E)) roll = -1f;
@@ -36,7 +35,6 @@ public class PlayerController : MonoBehaviour
             roll * rotationSpeed * Time.deltaTime
         );
 
-        
         if (Input.GetKey(KeyCode.Space))
         {
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
